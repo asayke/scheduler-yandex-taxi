@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,5 +35,9 @@ public class TaxiService {
         MomentPrice momentPrice = new MomentPrice(LocalDateTime.now(ZoneId.of("Africa/Cairo")), priceDouble);
 
         priceRepository.save(momentPrice);
+    }
+
+    public List<MomentPrice> getAllPrice() {
+        return priceRepository.findAll();
     }
 }
