@@ -5,15 +5,18 @@ import com.asayke.scheduleryandextaxi.model.Coordinate;
 import com.asayke.scheduleryandextaxi.model.MomentPrice;
 import com.asayke.scheduleryandextaxi.model.Price;
 import com.asayke.scheduleryandextaxi.properties.YandexProperties;
+import com.asayke.scheduleryandextaxi.repository.PriceRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+@Service
 @RequiredArgsConstructor
 public class TaxiService {
     private final YandexProperties yandexProperties;
-    private final PriceRepostitory priceRepostitory;
+    private final PriceRepository priceRepository;
     private final TaxiApiClient taxiApiClient;
 
     public void getPrice(Coordinate startPoint, Coordinate endPoint) {
@@ -30,6 +33,6 @@ public class TaxiService {
         double priceDouble = currentPrice.getOptions().get(0).getPrice();
         MomentPrice momentPrice = new MomentPrice(LocalDateTime.now(ZoneId.of("Africa/Cairo")), priceDouble);
 
-        priceRepository.save();
+        priceRepository.save(momentPrice);
     }
 }
